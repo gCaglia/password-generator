@@ -36,4 +36,7 @@ Once installed, you can generate a random password by simply running:
 safe-password-generator
 ```
 
-The generated password will contain a mix of upper case letters, lower case letters, and numbers.
+The following command line arguments are offered:
+- `-l` or `--length`: Any positive integer. Defines the length of the generated password.
+- `--alphanumeric`: If passed, output will only contain alphanumeric characters.
+- `-c` or `--clean`: If passed, the "Your password: " part of the output will be hidden.

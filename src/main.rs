@@ -3,10 +3,32 @@ mod test;
 
 mod randomizer;
 
-use crate::randomizer::create_password;
+use clap::Parser;
+use crate::randomizer::{create_simple_password, Sampleable, PasswordDist};
+
+
+#[derive(Parser)]
+#[clap(version = "0.2.0")]
+struct Cli {
+    #[clap(long)]
+    alphanumeric: bool,
+
+    #[clap(short, long, default_value_t=30)]
+    length: usize,
+
+    #[clap(short, long)]
+    clean: bool
+}
 
 fn main() {
-    let default_size: usize = 30;
-    let password = create_password(default_size);
-    println!("Your password: {}", password);
+    let args = Cli::parse();
+    let password: String;
+    let prefix: &str = if args.clean {""} else {"Your password: "};
+
+    if args.alphanumeric {
+        password = create_simple_password(args.length);
+    } else {
+        password = PasswordDist.sample(args.length);
+    }
+    println!("{}{}", prefix, password);
 }
